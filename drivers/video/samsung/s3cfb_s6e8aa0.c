@@ -1400,7 +1400,7 @@ static int s6e8ax0_probe(struct device *dev)
 	lcd->power = FB_BLANK_UNBLANK;
 	lcd->ldi_enable = 1;
 	lcd->connected = 1;
-	lcd->auto_brightness = 0;
+	lcd->auto_brightness = 1;
 
 	ret = device_create_file(&lcd->ld->dev, &dev_attr_power_reduce);
 	if (ret < 0)
