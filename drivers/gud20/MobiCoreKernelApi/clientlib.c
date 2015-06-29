@@ -24,7 +24,7 @@
 #include "session.h"
 
 /* device list */
-LIST_HEAD(devices);
+LIST_HEAD(client_devices);
 
 static struct mcore_device_t *resolve_device_id(uint32_t device_id)
 {
@@ -32,7 +32,7 @@ static struct mcore_device_t *resolve_device_id(uint32_t device_id)
 	struct list_head *pos;
 
 	/* Get mcore_device_t for device_id */
-	list_for_each(pos, &devices) {
+	list_for_each(pos, &client_devices) {
 		tmp = list_entry(pos, struct mcore_device_t, list);
 		if (tmp->device_id == device_id)
 			return tmp;
@@ -42,7 +42,7 @@ static struct mcore_device_t *resolve_device_id(uint32_t device_id)
 
 static void add_device(struct mcore_device_t *device)
 {
-	list_add_tail(&(device->list), &devices);
+	list_add_tail(&(device->list), &client_devices);
 }
 
 static bool remove_device(uint32_t device_id)
@@ -50,7 +50,7 @@ static bool remove_device(uint32_t device_id)
 	struct mcore_device_t *tmp;
 	struct list_head *pos, *q;
 
-	list_for_each_safe(pos, q, &devices) {
+	list_for_each_safe(pos, q, &client_devices) {
 		tmp = list_entry(pos, struct mcore_device_t, list);
 		if (tmp->device_id == device_id) {
 			list_del(pos);
